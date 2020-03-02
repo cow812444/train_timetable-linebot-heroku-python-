@@ -1,0 +1,11 @@
+line-bot-sdk
+flask
+pandas
+dnspython==1.16.0
+async-timeout==3.0.1
+asyncio
+pymysql
+selenium
+bs4
+python-dotenv
+lxml
