@@ -209,7 +209,7 @@ def handle_message(event):
         headers.update(app.get_auth_header())
         r = requests.get(url, timeout=float(10), headers=headers)
         r_obj = r.json()
-        result_msg = get_train_time_table(r_obj)
+        result_msg = get_train_time_table(event, r_obj)
         msg = TextSendMessage(text=result_msg)
         line_bot_api.reply_message(event.reply_token, msg)
         #print(r_obj['Count'])
