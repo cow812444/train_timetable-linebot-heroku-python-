@@ -271,7 +271,7 @@ def get_train_time_table(event, r_obj):
         #msg = TextSendMessage(text=result)
         #line_bot_api.reply_message(event.reply_token, msg)
         resultList.append(result)
-    msg = TextSendMessage(text=''join(resultList))
+    msg = TextSendMessage(text=''.join(resultList))
     line_bot_api.reply_message(event.reply_token, msg)
     return '感謝您的使用'
         #print('{type}({No})'.format(type=trainType, No=trainNo))
