@@ -126,6 +126,7 @@ flexMsgModule = {
       }
     }
   }
+flexMsgModule_2 = {}
 timeTrainModule = {
     "type": "box",
     "layout": "horizontal",
