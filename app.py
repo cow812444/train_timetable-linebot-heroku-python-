@@ -17,7 +17,6 @@ from datetime import timedelta
 from time import mktime
 import base64
 import requests
-from train_timetable-linebot-heroku-python- import flexMsgModule
 
 app = Flask(__name__)
 
