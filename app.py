@@ -264,13 +264,15 @@ def get_train_time_table(event, r_obj):
     resultList = []
     for trainInfo in timeSequence:
         #print(trainTimeTable[trainInfo])
-        result = '從 {from_}-{from_time} 到 {end}-{end_time} ({type}-{No})'.format(
+        result = '從 {from_}-{from_time} 到 {end}-{end_time} ({type}-{No})\r\n'.format(
             type=trainTimeTable[trainInfo][1], No=trainTimeTable[trainInfo][0],
             from_=trainTimeTable[trainInfo][2], end=trainTimeTable[trainInfo][3], 
             from_time=trainTimeTable[trainInfo][4], end_time=trainTimeTable[trainInfo][5])
-        msg = TextSendMessage(text=result)
-        line_bot_api.reply_message(event.reply_token, msg)
+        #msg = TextSendMessage(text=result)
+        #line_bot_api.reply_message(event.reply_token, msg)
         resultList.append(result)
+    msg = TextSendMessage(text=''join(resultList))
+    line_bot_api.reply_message(event.reply_token, msg)
     return '感謝您的使用'
         #print('{type}({No})'.format(type=trainType, No=trainNo))
         #print('從 {from_}-{from_time} 到 {end}-{end_time}'.format(
