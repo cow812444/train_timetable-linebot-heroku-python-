@@ -399,7 +399,8 @@ def get_train_time_table(flexMsg, r_obj):
             duration.append(duration_str[0]+'小時')
         duration.append(duration_str[1]+'分鐘')
         duration = ''.join(duration)
-        checktime = str(startTime_dt - datetime.now() + timedelta(days=43893))
+        dt = datetime.today()-datetime.strptime("1900-1-1", "%Y-%m-%d")
+        checktime = str(startTime_dt - datetime.now() + timedelta(days=dt.days))
         check = re.search(r'-1 day', checktime)
 
         #將當日未行駛車趟放入dict
