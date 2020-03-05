@@ -112,74 +112,7 @@ flexMsgModule = {
             {
               "type": "separator",
               "margin": "xs"
-            },
-            {
-              "type": "box",
-              "layout": "horizontal",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "09:27",
-                  "size": "sm",
-                  "color": "#555555",
-                  "align": "center"
-                },
-                {
-                  "type": "text",
-                  "text": "10:14",
-                  "size": "sm",
-                  "color": "#111111",
-                  "align": "center"
-                },
-                {
-                  "type": "text",
-                  "text": "47分鐘",
-                  "size": "sm",
-                  "color": "#555555",
-                  "align": "center"
-                },
-                {
-                  "type": "text",
-                  "text": "區間-1247",
-                  "size": "sm",
-                  "color": "#555555",
-                  "align": "center"
-                }
-              ],
-              "margin": "lg"
-            },
-            {
-              "type": "box",
-              "layout": "horizontal",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "09:27",
-                  "size": "sm",
-                  "color": "#555555",
-                  "align": "center"
-                },
-                {
-                  "type": "text",
-                  "text": "10:14",
-                  "size": "sm",
-                  "color": "#111111",
-                  "align": "center"
-                },
-                {
-                  "type": "text",
-                  "text": "47分鐘",
-                  "size": "sm",
-                  "color": "#555555",
-                  "align": "center"
-                },
-                {
-                  "type": "text",
-                  "text": "區間-1247",
-                  "size": "xxs",
-                  "color": "#555555",
-                  "align": "center"
-                }
+            }
               ],
               "margin": "lg"
             }
