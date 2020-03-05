@@ -209,15 +209,17 @@ def handle_message(event):
         headers.update(app.get_auth_header())
         r = requests.get(url, timeout=float(10), headers=headers)
         r_obj = r.json()
-        result_msg = self.get_train_time_table(r_obj)
-        line_bot_api.reply_message(event.reply_token, result_msg)
+        result_msg = get_train_time_table(r_obj)
+        msg = TextSendMessage(text=result_msg)
+        line_bot_api.reply_message(event.reply_token, msg)
         #print(r_obj['Count'])
     else:
-        line_bot_api.reply_message(event.reply_token, '輸入格式錯誤！')
+        msg = TextSendMessage(text='輸入格式錯誤！')
+        line_bot_api.reply_message(event.reply_token, msg)
     #message = TextSendMessage(text=event.message.text)
-    line_bot_api.reply_message(event.reply_token, message)
+    #line_bot_api.reply_message(event.reply_token, message)
 
-def get_train_time_table(self, r_obj):
+def get_train_time_table(r_obj):
     trainTimeTable = {}
     timeSequence = []
 
@@ -266,8 +268,10 @@ def get_train_time_table(self, r_obj):
             type=trainTimeTable[trainInfo][1], No=trainTimeTable[trainInfo][0],
             from_=trainTimeTable[trainInfo][2], end=trainTimeTable[trainInfo][3], 
             from_time=trainTimeTable[trainInfo][4], end_time=trainTimeTable[trainInfo][5])
+        msg = TextSendMessage(text=result)
+        line_bot_api.reply_message(event.reply_token, msg)
         resultList.append(result)
-    return resultList
+    return '感謝您的使用'
         #print('{type}({No})'.format(type=trainType, No=trainNo))
         #print('從 {from_}-{from_time} 到 {end}-{end_time}'.format(
         #    from_=startStation, end=arrivalStation, 
