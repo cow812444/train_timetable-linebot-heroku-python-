@@ -17,6 +17,7 @@ from datetime import timedelta
 from time import mktime
 import base64
 import requests
+import copy
 
 app = Flask(__name__)
 
@@ -436,8 +437,6 @@ def get_train_time_table(r_obj):
     print('---')
     if str(r_obj['Count']) == '0':
         return '查無航班'
-    else:
-        flexMsgModule['body']['contents'][2]['text'] = '歷經 ' + str(r_obj['Count']) + ' 站'
 
     for payload in r_obj['TrainTimetables']:
         #set default information
@@ -447,6 +446,8 @@ def get_train_time_table(r_obj):
         arrivalStation = payload['StopTimes'][1]['StationName']['Zh_tw']
         startTime_str = payload['StopTimes'][0]['ArrivalTime']
         arrivalTime_str = payload['StopTimes'][1]['DepartureTime']
+        stopSequence_int = payload['StopTimes'][1]['StopSequence'] - payload['StopTimes'][0]['StopSequence']
+        
 
         #判斷時間順序
         regconizeTime = startTime_str.replace(':', '')
@@ -459,8 +460,8 @@ def get_train_time_table(r_obj):
         duration = []
         duration_dt =  arrivalTime_dt - startTime_dt
         duration_str = str(duration_dt).split(':')
-        if duration_str[0] == '0':
-            duration.append(duration_str[1]+'小時')
+        if duration_str[0] != '0':
+            duration.append(duration_str[0]+'小時')
         duration.append(duration_str[1]+'分鐘')
         duration = ''.join(duration)
         checktime = str(startTime_dt - datetime.now() + timedelta(days=43893))
@@ -477,9 +478,11 @@ def get_train_time_table(r_obj):
     #對所有車趟進行時間排序
     timeSequence.sort()
     resultList = []
-    
+    #timeTrainModule_2 = copy.deepcopy(timeTrainModule)
+    flexMsgModule['body']['contents'][2]['text'] = '歷經 ' + str(stopSequence_int) + ' 站'
     for trainInfo in timeSequence:
         #print(trainTimeTable[trainInfo])
+        timeTrainModule = copy.deepcopy(timeTrainModule)
         timeTrainModule['contents'][0]['text'] = trainTimeTable[trainInfo][4]
         timeTrainModule['contents'][1]['text'] = trainTimeTable[trainInfo][5]
         timeTrainModule['contents'][2]['text'] = duration
