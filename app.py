@@ -434,10 +434,10 @@ def get_train_time_table(r_obj):
     print('目前時間: ', nowTime)
     #print(datetime.now()- timedelta(days=43893))
     print('---')
-    if r_obj['Count'] == '0':
+    if strr(r_obj['Count']) == '0':
         return '查無航班'
     else:
-        flexMsgModule['body']['contents'][2]['text'] = '歷經 ' + r_obj['Count'] + ' 站'
+        flexMsgModule['body']['contents'][2]['text'] = '歷經 ' + str(r_obj['Count']) + ' 站'
 
     for payload in r_obj['TrainTimetables']:
         #set default information
