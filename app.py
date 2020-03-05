@@ -17,6 +17,7 @@ from datetime import timedelta
 from time import mktime
 import base64
 import requests
+from train_timetable-linebot-heroku-python- import flexMsgModule
 
 app = Flask(__name__)
 
@@ -28,6 +29,14 @@ handler = WebhookHandler(os.environ.get('CHANNEL_SECRET_ID'))
 app_id = os.environ.get('APP_ID')
 # 台鐵 Access App_key token
 app_key = os.environ.get('APP_KEY')
+
+#開啟json準備編輯flex msg
+try:
+    flexMsgModule = json.load(os.environ.get('flexMsgModule'))
+    timeTrainModule = json.load(os.environ.get('timeTrainModule'))
+except:
+    print('Error: 無法讀取json')
+
 today = datetime.today()
 today_str = datetime.strftime(today, '%Y-%m-%d')
 location = {'基隆': '0900',
@@ -202,6 +211,7 @@ def handle_message(event):
             from_where = ipt_pattern.group(1)
             end_where = ipt_pattern.group(2)
         if from_where != '' and end_where != '':
+            flexMsgModule['body']['contents'][1]['text'] = from_where + ' → ' + end_where
             #print(location[from_where])
             #print(location[end_where])
             app = Auth(app_id, app_key)
@@ -234,6 +244,9 @@ def get_train_time_table(r_obj):
     print('---')
     if r_obj['Count'] == '0':
         return '查無航班'
+    else:
+        flexMsgModule['body']['contents'][2]['text'] = '歷經 ' + r_obj['Count'] + ' 站'
+
     for payload in r_obj['TrainTimetables']:
         #set default information
         trainNo = payload['TrainInfo']['TrainNo']
@@ -266,8 +279,14 @@ def get_train_time_table(r_obj):
     #對所有車趟進行時間排序
     timeSequence.sort()
     resultList = []
+    
     for trainInfo in timeSequence:
         #print(trainTimeTable[trainInfo])
+        timeTrainModule['contents'][0]['text'] = trainTimeTable[trainInfo][4]
+        timeTrainModule['contents'][1]['text'] = trainTimeTable[trainInfo][5]
+        timeTrainModule['contents'][2]['text'] = '40分鐘'
+        timeTrainModule['contents'][3]['text'] = trainTimeTable[trainInfo][1] + '-' trainTimeTable[trainInfo][0]
+        flexMsgModule['body']['contents'][4]['contents'].append(timeTrainModule)
         result = '從 {from_}-{from_time} 到 {end}-{end_time} ({type}-{No})\r\n'.format(
             type=trainTimeTable[trainInfo][1], No=trainTimeTable[trainInfo][0],
             from_=trainTimeTable[trainInfo][2], end=trainTimeTable[trainInfo][3], 
@@ -275,9 +294,9 @@ def get_train_time_table(r_obj):
         #msg = TextSendMessage(text=result)
         #line_bot_api.reply_message(event.reply_token, msg)
         resultList.append(result)
-    msg = TextSendMessage(text=''.join(resultList))
-    #line_bot_api.reply_message(event.reply_token, msg)
-    return msg
+    #msg = TextSendMessage(text=''.join(resultList))
+    flexMsg = FlexSendMessage(alt_text='您的火車時刻表', contents=flexMsgModule)
+    return flexMsg
         #print('{type}({No})'.format(type=trainType, No=trainNo))
         #print('從 {from_}-{from_time} 到 {end}-{end_time}'.format(
         #    from_=startStation, end=arrivalStation, 
