@@ -219,7 +219,7 @@ def handle_message(event):
     #message = TextSendMessage(text=event.message.text)
     #line_bot_api.reply_message(event.reply_token, message)
 
-def get_train_time_table(r_obj):
+def get_train_time_table(event, r_obj):
     trainTimeTable = {}
     timeSequence = []
 
