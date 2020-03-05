@@ -183,7 +183,7 @@ def callback():
     app.logger.info("Request body: " + body)
 
     print(body)
-    
+
     # handle webhook body
     try:
         handler.handle(body, signature)
@@ -212,9 +212,9 @@ def handle_message(event):
         headers.update(app.get_auth_header())
         r = requests.get(url, timeout=float(10), headers=headers)
         r_obj = r.json()
-        result_msg = get_train_time_table(event, r_obj)
-        msg = TextSendMessage(text=result_msg)
-        line_bot_api.reply_message(event.reply_token, msg)
+        result_msg = get_train_time_table(r_obj)
+        #msg = TextSendMessage(text=result_msg)
+        line_bot_api.reply_message(event.reply_token, result_msg)
         #print(r_obj['Count'])
     else:
         msg = TextSendMessage(text='輸入格式錯誤！')
@@ -222,7 +222,7 @@ def handle_message(event):
     #message = TextSendMessage(text=event.message.text)
     #line_bot_api.reply_message(event.reply_token, message)
 
-def get_train_time_table(event, r_obj):
+def get_train_time_table(r_obj):
     trainTimeTable = {}
     timeSequence = []
 
@@ -275,8 +275,8 @@ def get_train_time_table(event, r_obj):
         #line_bot_api.reply_message(event.reply_token, msg)
         resultList.append(result)
     msg = TextSendMessage(text=''.join(resultList))
-    line_bot_api.reply_message(event.reply_token, msg)
-    return '感謝您的使用'
+    #line_bot_api.reply_message(event.reply_token, msg)
+    return msg
         #print('{type}({No})'.format(type=trainType, No=trainNo))
         #print('從 {from_}-{from_time} 到 {end}-{end_time}'.format(
         #    from_=startStation, end=arrivalStation, 
