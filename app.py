@@ -29,15 +29,208 @@ app_id = os.environ.get('APP_ID')
 # 台鐵 Access App_key token
 app_key = os.environ.get('APP_KEY')
 
-#開啟json準備編輯flex msg
-try:
-    flexMsgModule = json.load(os.environ.get('flexMsgModule'))
-    timeTrainModule = json.load(os.environ.get('timeTrainModule'))
-except:
-    print('Error: 無法讀取json')
-
 today = datetime.today()
 today_str = datetime.strftime(today, '%Y-%m-%d')
+
+#開啟json準備編輯flex msg
+flexMsgModule = {
+    "type": "bubble",
+    "body": {
+      "type": "box",
+      "layout": "vertical",
+      "contents": [
+        {
+          "type": "text",
+          "text": "您的火車時刻表",
+          "weight": "bold",
+          "color": "#1DB446",
+          "size": "sm"
+        },
+        {
+          "type": "text",
+          "text": "桃園 → 竹北",
+          "weight": "bold",
+          "size": "xxl",
+          "margin": "md"
+        },
+        {
+          "type": "text",
+          "text": "歷經 10 站",
+          "size": "sm",
+          "color": "#aaaaaa",
+          "wrap": true
+        },
+        {
+          "type": "separator",
+          "margin": "md"
+        },
+        {
+          "type": "box",
+          "layout": "vertical",
+          "margin": "xxl",
+          "spacing": "sm",
+          "contents": [
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "出發時間",
+                  "size": "xs",
+                  "color": "#555555",
+                  "align": "start",
+                  "weight": "bold"
+                },
+                {
+                  "type": "text",
+                  "text": "抵達時間",
+                  "size": "xs",
+                  "color": "#555555",
+                  "align": "start",
+                  "weight": "bold"
+                },
+                {
+                  "type": "text",
+                  "text": "乘車時間",
+                  "size": "xs",
+                  "align": "start",
+                  "color": "#555555",
+                  "weight": "bold"
+                },
+                {
+                  "type": "text",
+                  "text": "車種編號",
+                  "color": "#555555",
+                  "size": "xs",
+                  "align": "center",
+                  "weight": "bold"
+                }
+              ]
+            },
+            {
+              "type": "separator",
+              "margin": "xs"
+            },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "09:27",
+                  "size": "sm",
+                  "color": "#555555",
+                  "align": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "10:14",
+                  "size": "sm",
+                  "color": "#111111",
+                  "align": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "47分鐘",
+                  "size": "sm",
+                  "color": "#555555",
+                  "align": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "區間-1247",
+                  "size": "sm",
+                  "color": "#555555",
+                  "align": "center"
+                }
+              ],
+              "margin": "lg"
+            },
+            {
+              "type": "box",
+              "layout": "horizontal",
+              "contents": [
+                {
+                  "type": "text",
+                  "text": "09:27",
+                  "size": "sm",
+                  "color": "#555555",
+                  "align": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "10:14",
+                  "size": "sm",
+                  "color": "#111111",
+                  "align": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "47分鐘",
+                  "size": "sm",
+                  "color": "#555555",
+                  "align": "center"
+                },
+                {
+                  "type": "text",
+                  "text": "區間-1247",
+                  "size": "xxs",
+                  "color": "#555555",
+                  "align": "center"
+                }
+              ],
+              "margin": "lg"
+            }
+          ]
+        }
+      ]
+    },
+    "styles": {
+      "header": {
+        "separator": False
+      },
+      "footer": {
+        "separator": True
+      }
+    }
+  }
+timeTrainModule = {
+    "type": "box",
+    "layout": "horizontal",
+    "contents": [
+      {
+        "type": "text",
+        "text": "09:27",
+        "size": "sm",
+        "color": "#555555",
+        "align": "center"
+      },
+      {
+        "type": "text",
+        "text": "10:14",
+        "size": "sm",
+        "color": "#555555",
+        "align": "center"
+      },
+      {
+        "type": "text",
+        "text": "47分鐘",
+        "size": "sm",
+        "color": "#555555",
+        "align": "center"
+      },
+      {
+        "type": "text",
+        "text": "區間-1247",
+        "size": "sm",
+        "color": "#555555",
+        "align": "center"
+      }
+    ],
+    "margin": "lg"
+  }
+
 location = {'基隆': '0900',
  '三坑': '0910',
  '八堵': '0920',
