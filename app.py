@@ -58,7 +58,7 @@ flexMsgModule = {
           "text": "歷經 10 站",
           "size": "sm",
           "color": "#aaaaaa",
-          "wrap": true
+          "wrap": True
         },
         {
           "type": "separator",
@@ -456,7 +456,13 @@ def get_train_time_table(r_obj):
         arrivalTime_dt = datetime.strptime(arrivalTime_str, '%H:%M')
 
         #計算行駛時間並判定車趟行駛與否
-        duration_dt =  arrivalTime_dt - startTime_dt 
+        duration = []
+        duration_dt =  arrivalTime_dt - startTime_dt
+        duration_str = str(duration_dt).split(':')
+        if duration_str[0] == '0':
+            duration.append(duration_str[1]+'小時')
+        duration.append(duration_str[1]+'分鐘')
+        duration = ''.join(duration)
         checktime = str(startTime_dt - datetime.now() + timedelta(days=43893))
         check = re.search(r'-1 day', checktime)
 
@@ -476,7 +482,7 @@ def get_train_time_table(r_obj):
         #print(trainTimeTable[trainInfo])
         timeTrainModule['contents'][0]['text'] = trainTimeTable[trainInfo][4]
         timeTrainModule['contents'][1]['text'] = trainTimeTable[trainInfo][5]
-        timeTrainModule['contents'][2]['text'] = '40分鐘'
+        timeTrainModule['contents'][2]['text'] = duration
         timeTrainModule['contents'][3]['text'] = trainTimeTable[trainInfo][1] + '-' + trainTimeTable[trainInfo][0]
         flexMsgModule['body']['contents'][4]['contents'].append(timeTrainModule)
         result = '從 {from_}-{from_time} 到 {end}-{end_time} ({type}-{No})\r\n'.format(
