@@ -63,7 +63,7 @@ flexMsgModule = {
         },
         {
           "type": "separator",
-          "margin": "md"
+          "margin": "xs"
         },
         {
           "type": "box",
@@ -217,14 +217,14 @@ timeTrainModule = {
       {
         "type": "text",
         "text": "47分鐘",
-        "size": "sm",
+        "size": "xxs",
         "color": "#555555",
         "align": "center"
       },
       {
         "type": "text",
         "text": "區間-1247",
-        "size": "sm",
+        "size": "xxs",
         "color": "#555555",
         "align": "center"
       }
@@ -482,12 +482,12 @@ def get_train_time_table(r_obj):
     flexMsgModule['body']['contents'][2]['text'] = '歷經 ' + str(stopSequence_int) + ' 站'
     for trainInfo in timeSequence:
         #print(trainTimeTable[trainInfo])
-        timeTrainModule = copy.deepcopy(timeTrainModule)
-        timeTrainModule['contents'][0]['text'] = trainTimeTable[trainInfo][4]
-        timeTrainModule['contents'][1]['text'] = trainTimeTable[trainInfo][5]
-        timeTrainModule['contents'][2]['text'] = duration
-        timeTrainModule['contents'][3]['text'] = trainTimeTable[trainInfo][1] + '-' + trainTimeTable[trainInfo][0]
-        flexMsgModule['body']['contents'][4]['contents'].append(timeTrainModule)
+        timeTrainModule_2 = copy.deepcopy(timeTrainModule)
+        timeTrainModule_2['contents'][0]['text'] = trainTimeTable[trainInfo][4]
+        timeTrainModule_2['contents'][1]['text'] = trainTimeTable[trainInfo][5]
+        timeTrainModule_2['contents'][2]['text'] = duration
+        timeTrainModule_2['contents'][3]['text'] = trainTimeTable[trainInfo][1] + '-' + trainTimeTable[trainInfo][0]
+        flexMsgModule['body']['contents'][4]['contents'].append(timeTrainModule_2)
         result = '從 {from_}-{from_time} 到 {end}-{end_time} ({type}-{No})\r\n'.format(
             type=trainTimeTable[trainInfo][1], No=trainTimeTable[trainInfo][0],
             from_=trainTimeTable[trainInfo][2], end=trainTimeTable[trainInfo][3], 
