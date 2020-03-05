@@ -113,9 +113,6 @@ flexMsgModule = {
               "type": "separator",
               "margin": "xs"
             }
-              ],
-              "margin": "lg"
-            }
           ]
         }
       ]
