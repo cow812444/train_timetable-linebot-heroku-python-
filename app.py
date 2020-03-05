@@ -284,7 +284,7 @@ def get_train_time_table(r_obj):
         timeTrainModule['contents'][0]['text'] = trainTimeTable[trainInfo][4]
         timeTrainModule['contents'][1]['text'] = trainTimeTable[trainInfo][5]
         timeTrainModule['contents'][2]['text'] = '40分鐘'
-        timeTrainModule['contents'][3]['text'] = trainTimeTable[trainInfo][1] + '-' trainTimeTable[trainInfo][0]
+        timeTrainModule['contents'][3]['text'] = trainTimeTable[trainInfo][1] + '-' + trainTimeTable[trainInfo][0]
         flexMsgModule['body']['contents'][4]['contents'].append(timeTrainModule)
         result = '從 {from_}-{from_time} 到 {end}-{end_time} ({type}-{No})\r\n'.format(
             type=trainTimeTable[trainInfo][1], No=trainTimeTable[trainInfo][0],
