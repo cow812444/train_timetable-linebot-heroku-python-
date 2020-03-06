@@ -412,7 +412,7 @@ def get_train_time_table(flexMsg, r_obj):
         if not check:
             timeSequence.append(regconizeTime)
             appends = {
-                regconizeTime:[trainNo, trainType, startStation, arrivalStation, startTime_str, arrivalTime_str]
+                regconizeTime:[trainNo, trainType, startStation, arrivalStation, startTime_str, arrivalTime_str,duration]
                 }
             trainTimeTable.update(appends)
             
@@ -426,7 +426,7 @@ def get_train_time_table(flexMsg, r_obj):
         timeTrainModule_2 = copy.deepcopy(timeTrainModule)
         timeTrainModule_2['contents'][0]['text'] = trainTimeTable[trainInfo][4]
         timeTrainModule_2['contents'][1]['text'] = trainTimeTable[trainInfo][5]
-        timeTrainModule_2['contents'][2]['text'] = duration
+        timeTrainModule_2['contents'][2]['text'] = trainTimeTable[trainInfo][6]
         timeTrainModule_2['contents'][3]['text'] = trainTimeTable[trainInfo][1] + '-' + trainTimeTable[trainInfo][0]
         flexMsg['contents'][0]['body']['contents'][4]['contents'].append(timeTrainModule_2)
         result = '從 {from_}-{from_time} 到 {end}-{end_time} ({type}-{No})\r\n'.format(
