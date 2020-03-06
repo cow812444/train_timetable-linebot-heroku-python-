@@ -400,7 +400,7 @@ def get_train_time_table(flexMsg, r_obj):
         duration = []
         duration_dt =  arrivalTime_dt - startTime_dt
         duration_str = str(duration_dt).split(':')
-        if duration_str[0] != '0':
+        if duration_str[0] != '0' and len(duration_str) <= 2:
             duration.append(duration_str[0]+'小時')
         duration.append(duration_str[1]+'分鐘')
         duration = ''.join(duration)
@@ -423,6 +423,9 @@ def get_train_time_table(flexMsg, r_obj):
     flexMsg['contents'][0]['body']['contents'][2]['text'] = '歷經 ' + str(stopSequence_int) + ' 站'
     for trainInfo in timeSequence:
         #print(trainTimeTable[trainInfo])
+        trainType_short = re.search(r'(區間快|區間|自強|莒光)', trainTimeTable[trainInfo][1])
+        if trainType_short:
+            trainTimeTable[trainInfo][1] = trainType_short.group(1)
         timeTrainModule_2 = copy.deepcopy(timeTrainModule)
         timeTrainModule_2['contents'][0]['text'] = trainTimeTable[trainInfo][4]
         timeTrainModule_2['contents'][1]['text'] = trainTimeTable[trainInfo][5]
