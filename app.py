@@ -62,7 +62,7 @@ flexMsgModule = {
         "text": "歷經 10 站",
         "size": "sm",
         "color": "#aaaaaa",
-        "wrap": true
+        "wrap": True
       },
       {
         "type": "separator",
@@ -122,10 +122,10 @@ flexMsgModule = {
   },
   "styles": {
     "header": {
-      "separator": false
+      "separator": False
     },
     "footer": {
-      "separator": true
+      "separator": True
     }
   }
 }
