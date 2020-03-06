@@ -35,97 +35,102 @@ today_str = datetime.strftime(today, '%Y-%m-%d')
 
 #開啟json準備編輯flex msg
 flexMsgModule = {
-    "type": "bubble",
-    "body": {
-      "type": "box",
-      "layout": "vertical",
-      "contents": [
-        {
-          "type": "text",
-          "text": "您的火車時刻表",
-          "weight": "bold",
-          "color": "#1DB446",
-          "size": "sm"
-        },
-        {
-          "type": "text",
-          "text": "桃園 → 竹北",
-          "weight": "bold",
-          "size": "xxl",
-          "margin": "md"
-        },
-        {
-          "type": "text",
-          "text": "歷經 10 站",
-          "size": "sm",
-          "color": "#aaaaaa",
-          "wrap": True
-        },
-        {
-          "type": "separator",
-          "margin": "xs"
-        },
-        {
-          "type": "box",
-          "layout": "vertical",
-          "margin": "xxl",
-          "spacing": "sm",
-          "contents": [
-            {
-              "type": "box",
-              "layout": "horizontal",
-              "contents": [
-                {
-                  "type": "text",
-                  "text": "出發時間",
-                  "size": "xs",
-                  "color": "#555555",
-                  "align": "start",
-                  "weight": "bold"
-                },
-                {
-                  "type": "text",
-                  "text": "抵達時間",
-                  "size": "xs",
-                  "color": "#555555",
-                  "align": "start",
-                  "weight": "bold"
-                },
-                {
-                  "type": "text",
-                  "text": "乘車時間",
-                  "size": "xs",
-                  "align": "start",
-                  "color": "#555555",
-                  "weight": "bold"
-                },
-                {
-                  "type": "text",
-                  "text": "車種編號",
-                  "color": "#555555",
-                  "size": "xs",
-                  "align": "center",
-                  "weight": "bold"
-                }
-              ]
-            },
-            {
-              "type": "separator",
-              "margin": "xs"
-            }
-          ]
-        }
-      ]
-    },
-    "styles": {
-      "header": {
-        "separator": False
+  "type": "carousel",
+  "contents": [
+  {
+  "type": "bubble",
+  "body": {
+    "type": "box",
+    "layout": "vertical",
+    "contents": [
+      {
+        "type": "text",
+        "text": "您的火車時刻表",
+        "weight": "bold",
+        "color": "#1DB446",
+        "size": "sm"
       },
-      "footer": {
-        "separator": True
+      {
+        "type": "text",
+        "text": "桃園 → 竹北",
+        "weight": "bold",
+        "size": "xxl",
+        "margin": "md"
+      },
+      {
+        "type": "text",
+        "text": "歷經 10 站",
+        "size": "sm",
+        "color": "#aaaaaa",
+        "wrap": true
+      },
+      {
+        "type": "separator",
+        "margin": "xs"
+      },
+      {
+        "type": "box",
+        "layout": "vertical",
+        "margin": "xxl",
+        "spacing": "sm",
+        "contents": [
+          {
+            "type": "box",
+            "layout": "horizontal",
+            "contents": [
+              {
+                "type": "text",
+                "text": "出發時間",
+                "size": "xs",
+                "color": "#555555",
+                "align": "start",
+                "weight": "bold"
+              },
+              {
+                "type": "text",
+                "text": "抵達時間",
+                "size": "xs",
+                "color": "#555555",
+                "align": "start",
+                "weight": "bold"
+              },
+              {
+                "type": "text",
+                "text": "乘車時間",
+                "size": "xs",
+                "align": "start",
+                "color": "#555555",
+                "weight": "bold"
+              },
+              {
+                "type": "text",
+                "text": "車種編號",
+                "color": "#555555",
+                "size": "xs",
+                "align": "center",
+                "weight": "bold"
+              }
+            ]
+          },
+          {
+            "type": "separator",
+            "margin": "xs"
+          }
+        ]
       }
+    ]
+  },
+  "styles": {
+    "header": {
+      "separator": false
+    },
+    "footer": {
+      "separator": true
     }
   }
+}
+]
+}
 flexMsgModule_2 = {}
 timeTrainModule = {
     "type": "box",
@@ -339,7 +344,7 @@ def handle_message(event):
             end_where = ipt_pattern.group(2)
         if from_where != '' and end_where != '':
             flexMsgModule_2 = copy.deepcopy(flexMsgModule)
-            flexMsgModule_2['body']['contents'][1]['text'] = from_where + ' → ' + end_where
+            flexMsgModule_2['contents'][0]['body']['contents'][1]['text'] = from_where + ' → ' + end_where
             #print(location[from_where])
             #print(location[end_where])
             app = Auth(app_id, app_key)
@@ -415,7 +420,7 @@ def get_train_time_table(flexMsg, r_obj):
     timeSequence.sort()
     resultList = []
     #timeTrainModule_2 = copy.deepcopy(timeTrainModule)
-    flexMsg['body']['contents'][2]['text'] = '歷經 ' + str(stopSequence_int) + ' 站'
+    flexMsg['contents'][0]['body']['contents'][2]['text'] = '歷經 ' + str(stopSequence_int) + ' 站'
     for trainInfo in timeSequence:
         #print(trainTimeTable[trainInfo])
         timeTrainModule_2 = copy.deepcopy(timeTrainModule)
@@ -423,7 +428,7 @@ def get_train_time_table(flexMsg, r_obj):
         timeTrainModule_2['contents'][1]['text'] = trainTimeTable[trainInfo][5]
         timeTrainModule_2['contents'][2]['text'] = duration
         timeTrainModule_2['contents'][3]['text'] = trainTimeTable[trainInfo][1] + '-' + trainTimeTable[trainInfo][0]
-        flexMsg['body']['contents'][4]['contents'].append(timeTrainModule_2)
+        flexMsg['contents'][0]['body']['contents'][4]['contents'].append(timeTrainModule_2)
         result = '從 {from_}-{from_time} 到 {end}-{end_time} ({type}-{No})\r\n'.format(
             type=trainTimeTable[trainInfo][1], No=trainTimeTable[trainInfo][0],
             from_=trainTimeTable[trainInfo][2], end=trainTimeTable[trainInfo][3], 
