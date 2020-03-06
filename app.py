@@ -400,9 +400,10 @@ def get_train_time_table(flexMsg, r_obj):
         duration = []
         duration_dt =  arrivalTime_dt - startTime_dt
         duration_str = str(duration_dt).split(':')
-        if duration_str[0] != '0' and len(duration_str) <= 2:
+        if duration_str[0] != '0' and len(duration_str[0]) <= 2:
             duration.append(duration_str[0]+'小時')
-        duration.append(duration_str[1]+'分鐘')
+        if duration_str[1] != '00':
+            duration.append(duration_str[1]+'分鐘')
         duration = ''.join(duration)
         dt = datetime.today()-datetime.strptime("1900-1-1", "%Y-%m-%d")
         checktime = str(startTime_dt - datetime.now() + timedelta(days=dt.days))
