@@ -100,16 +100,16 @@ def handle_message(event):
                     quick_reply=QuickReply(
                         items=[
                             QuickReplyButton(
-                                action=PostbackAction(label="台北", data="fromPlace=台北", endPlace=end_where)
+                                action=PostbackAction(label="台北", data="fromPlace=台北")
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="桃園", data="fromPlace=桃園", endPlace=end_where)
+                                action=PostbackAction(label="桃園", data="fromPlace=桃園")
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="高雄", data="fromPlace=高雄", endPlace=end_where)
+                                action=PostbackAction(label="高雄", data="fromPlace=高雄")
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="台中", data="fromPlace=台中", endPlace=end_where)
+                                action=PostbackAction(label="台中", data="fromPlace=台中")
                             ),
                             QuickReplyButton(
                                 action=MessageAction(label="都可以", text="請不要這樣>< 您決定好後再跟我說唷")
@@ -122,12 +122,12 @@ def handle_message(event):
 
 # 處理postback資訊
 @handler.add(PostbackEvent)
-def handle_postback(event, end_where='台北'):
+def handle_postback(event):
     locate = ['台北', '桃園', '台中', '高雄']
     data = dict(parse_qsl(event.postback.data))
     if data.get('fromPlace') in locate:
         from_where = data.get('fromPlace')
-        r_obj,flexMsgModule_2 = trainCrawler.call_train_station_api(from_where, end_where)
+        r_obj,flexMsgModule_2 = trainCrawler.call_train_station_api(from_where, '桃園')
         flexMsg = trainCrawler.get_train_time_table(flexMsgModule_2, r_obj)
         line_bot_api.reply_message(
             event.reply_token, 
