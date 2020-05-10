@@ -34,6 +34,7 @@ today_str = datetime.strftime(datetime.today(), '%Y-%m-%d')
 flexMsgModule = DictMenu.flexMsgModule
 flexMsgModule_2 = DictMenu.flexMsgModule_2
 location = DictMenu.location
+rich_button_4 = DictMenu.rich_menu_tech_support
 
 #selenimu crawler set-up
 #chrome_options = webdriver.ChromeOptions()
@@ -67,6 +68,7 @@ def handle_message(event):
         from_where = ''
         end_where = ''
         ipt_pattern = re.search(r'(基隆|三坑|八堵|七堵|百福|五堵|汐止|汐科|南港|松山|臺北|台北|台南|台中|萬華|板橋|浮洲|樹林|南樹林|山佳|鶯歌|桃園|內壢|中壢|埔心|楊梅|富岡|新富|北湖|湖口|新豐|竹北|北新竹|新竹|三姓橋|香山|崎頂|竹南|造橋|豐富|苗栗|南勢|銅鑼|三義|泰安|后里|豐原|栗林|潭子|頭家厝|松竹|太原|精武|臺中|五權|大慶|烏日|新烏日|成功|彰化|花壇|大村|員林|永靖|社頭|田中|二水|林內|石榴|斗六|斗南|石龜|大林|民雄|嘉北|嘉義|水上|南靖|後壁|新營|柳營|林鳳營|隆田|拔林|善化|南科|新市|永康|大橋|臺南|林森|南臺南|保安|仁德|中洲|大湖|路竹|岡山|橋頭|楠梓|新左營|左營|內惟|美術館|鼓山|三塊厝|高雄|民族|科工館|正義|鳳山|後庄|九曲堂|六塊厝|屏東).*[到去回](基隆|三坑|八堵|七堵|百福|五堵|汐止|汐科|南港|松山|臺北|台北|台南|台中|萬華|板橋|浮洲|樹林|南樹林|山佳|鶯歌|桃園|內壢|中壢|埔心|楊梅|富岡|新富|北湖|湖口|新豐|竹北|北新竹|新竹|三姓橋|香山|崎頂|竹南|造橋|豐富|苗栗|南勢|銅鑼|三義|泰安|后里|豐原|栗林|潭子|頭家厝|松竹|太原|精武|臺中|五權|大慶|烏日|新烏日|成功|彰化|花壇|大村|員林|永靖|社頭|田中|二水|林內|石榴|斗六|斗南|石龜|大林|民雄|嘉北|嘉義|水上|南靖|後壁|新營|柳營|林鳳營|隆田|拔林|善化|南科|新市|永康|大橋|臺南|林森|南臺南|保安|仁德|中洲|大湖|路竹|岡山|橋頭|楠梓|新左營|左營|內惟|美術館|鼓山|三塊厝|高雄|民族|科工館|正義|鳳山|後庄|九曲堂|六塊厝|屏東)', event.message.text)
+        rich_pattern = re.search(r'(技術|服務|支持)', event.message.text)
         if ipt_pattern:
             from_where = ipt_pattern.group(1)
             end_where = ipt_pattern.group(2)
@@ -83,6 +85,9 @@ def handle_message(event):
             r_obj = r.json()
             result_msg = trainCrawler.get_train_time_table(flexMsgModule_2, r_obj)
             flexMsgs = FlexSendMessage(alt_text='您的火車時刻表', contents=result_msg)
+            line_bot_api.reply_message(event.reply_token, flexMsgs)
+        elif rich_pattern:
+            flexMsgs = FlexSendMessage(alt_text='技術支持', contents=rich_button_4)
             line_bot_api.reply_message(event.reply_token, flexMsgs)
         else:
             msg = TextSendMessage(text='輸入格式錯誤！')
