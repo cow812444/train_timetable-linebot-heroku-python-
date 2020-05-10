@@ -103,13 +103,13 @@ def handle_message(event):
                                 action=PostbackAction(label="台北", data="fromPlace=台北", endPlace=end_where)
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="桃園", data="fromPlace=桃園")
+                                action=PostbackAction(label="桃園", data="fromPlace=桃園", endPlace=end_where)
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="高雄", data="fromPlace=高雄")
+                                action=PostbackAction(label="高雄", data="fromPlace=高雄", endPlace=end_where)
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="台中", data="fromPlace=台中")
+                                action=PostbackAction(label="台中", data="fromPlace=台中", endPlace=end_where)
                             ),
                             QuickReplyButton(
                                 action=MessageAction(label="都可以", text="請不要這樣>< 您決定好後再跟我說唷")
