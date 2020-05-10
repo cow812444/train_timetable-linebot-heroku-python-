@@ -82,16 +82,17 @@ def handle_message(event):
         elif ipt_pattern:
             from_where = ipt_pattern.group(1)
             end_where = ipt_pattern.group(2)
-            r_obj = trainCrawler.call_train_station_api(from_where, end_where)
+            r_obj,flexMsgModule_2 = trainCrawler.call_train_station_api(from_where, end_where)
+            flexMsg = trainCrawler.get_train_time_table(flexMsgModule_2, r_obj)
             line_bot_api.reply_message(
                 event.reply_token, 
                 FlexSendMessage(
                     alt_text='您的火車時刻表', 
-                    contents=trainCrawler.get_train_time_table(flexMsgModule_2, r_obj)
+                    contents=flexMsg
                     )
                 )
         elif go_out_intent_pattern:
-            end_place = go_out_intent_pattern.group(1)
+            end_where = go_out_intent_pattern.group(1)
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(
@@ -126,12 +127,13 @@ def handle_postback(event):
     data = dict(parse_qsl(event.postback.data))
     if data.get('fromPlace') in locate:
         from_where = data.get('fromPlace')
-        r_obj = trainCrawler.call_train_station_api(from_where, end_where)
+        r_obj,flexMsgModule_2 = trainCrawler.call_train_station_api(from_where, end_where)
+        flexMsg = trainCrawler.get_train_time_table(flexMsgModule_2, r_obj)
         line_bot_api.reply_message(
             event.reply_token, 
             FlexSendMessage(
                 alt_text='您的火車時刻表', 
-                contents=trainCrawler.get_train_time_table(flexMsgModule_2, r_obj)
+                contents=flexMsg
                 )
             )
         '''

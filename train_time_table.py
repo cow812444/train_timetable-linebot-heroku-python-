@@ -26,7 +26,7 @@ class TrainTimeTable:
             headers.update(auth.get_auth_header())
             r = requests.get(url, timeout=float(10), headers=headers)
             r_obj = r.json()
-            return r_obj
+            return r_obj,flexMsgModule_2
 
     def get_train_time_table(self, flexMsg, r_obj):
         trainTimeDict = DictMenu.timeTrainModule
