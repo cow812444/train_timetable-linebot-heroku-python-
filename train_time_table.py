@@ -9,10 +9,11 @@ from auth import Auth
 from dict_menu import DictMenu
 
 class TrainTimeTable:
-    
+
     def call_train_station_api(self, from_where, end_where):
         auth = Auth()
         flexMsgModule = DictMenu.flexMsgModule
+        location = DictMenu.location
         if from_where != '' and end_where != '':
             flexMsgModule_2 = copy.deepcopy(flexMsgModule)
             flexMsgModule_2['body']['contents'][1]['text'] = from_where + ' → ' + end_where
