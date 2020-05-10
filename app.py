@@ -100,16 +100,16 @@ def handle_message(event):
                     quick_reply=QuickReply(
                         items=[
                             QuickReplyButton(
-                                action=PostbackAction(label="台北", data="fromPlace=台北")
+                                action=PostbackAction(label="台北", data="fromPlace=台北", text='台北')
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="桃園", data="fromPlace=桃園")
+                                action=PostbackAction(label="桃園", data="fromPlace=桃園", text='桃園')
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="高雄", data="fromPlace=高雄")
+                                action=PostbackAction(label="高雄", data="fromPlace=高雄", text='高雄')
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="台中", data="fromPlace=台中")
+                                action=PostbackAction(label="台中", data="fromPlace=台中", text='台中')
                             ),
                             QuickReplyButton(
                                 action=MessageAction(label="都可以", text="請不要這樣>< 您決定好後再跟我說唷")
