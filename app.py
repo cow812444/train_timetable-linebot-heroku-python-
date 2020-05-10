@@ -100,7 +100,7 @@ def handle_message(event):
                     quick_reply=QuickReply(
                         items=[
                             QuickReplyButton(
-                                action=PostbackAction(label="台北", data="fromPlace=台北")
+                                action=PostbackAction(label="台北", data="fromPlace=台北", endPlace=end_where)
                             ),
                             QuickReplyButton(
                                 action=PostbackAction(label="桃園", data="fromPlace=桃園")
@@ -122,7 +122,7 @@ def handle_message(event):
 
 # 處理postback資訊
 @handler.add(PostbackEvent)
-def handle_postback(event):
+def handle_postback(event, end_where='台北'):
     locate = ['台北', '桃園', '台中', '高雄']
     data = dict(parse_qsl(event.postback.data))
     if data.get('fromPlace') in locate:
