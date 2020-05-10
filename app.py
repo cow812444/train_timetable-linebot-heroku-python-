@@ -15,6 +15,8 @@ from datetime import (
 import base64
 import requests
 import copy
+from urllib.parse import parse_qsl
+
 from auth import Auth
 from train_time_table import TrainTimeTable
 from dict_menu import DictMenu
@@ -121,10 +123,11 @@ def handle_message(event):
 @handler.add(PostbackEvent)
 def handle_postback(event):
     locate = ['台北', '桃園', '台中', '高雄']
-    data = event.postback.data
-    if data.fromPlace in locate:
-        from_where = data.fromPlace
-        end_where = event.postback.endPlace
+    data = dict(parse_qsl(event.postback.data))
+    end_where = dict(parse_qsl(event.postback.endPlace))
+    if data.get('fromPlace') in locate:
+        from_where = data.get('fromPlace')
+        end_where = end_where.get('endPlace')
         r_obj = trainCrawler.call_train_station_api(from_where, end_where)
         line_bot_api.reply_message(
             event.reply_token, 
