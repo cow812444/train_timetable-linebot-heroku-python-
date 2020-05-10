@@ -99,16 +99,16 @@ def handle_message(event):
                     quick_reply=QuickReply(
                         items=[
                             QuickReplyButton(
-                                action=PostbackAction(label="台北", data="fromPlace=台北", endPlace=end_place)
+                                action=PostbackAction(label="台北", data="fromPlace=台北")
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="桃園", data="fromPlace=桃園", endPlace=end_place)
+                                action=PostbackAction(label="桃園", data="fromPlace=桃園")
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="高雄", data="fromPlace=高雄", endPlace=end_place)
+                                action=PostbackAction(label="高雄", data="fromPlace=高雄")
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="台中", data="fromPlace=台中", endPlace=end_place)
+                                action=PostbackAction(label="台中", data="fromPlace=台中")
                             ),
                             QuickReplyButton(
                                 action=MessageAction(label="都可以", text="請不要這樣>< 您決定好後再跟我說唷")
@@ -124,10 +124,8 @@ def handle_message(event):
 def handle_postback(event):
     locate = ['台北', '桃園', '台中', '高雄']
     data = dict(parse_qsl(event.postback.data))
-    end_where = dict(parse_qsl(event.postback.endPlace))
     if data.get('fromPlace') in locate:
         from_where = data.get('fromPlace')
-        end_where = end_where.get('endPlace')
         r_obj = trainCrawler.call_train_station_api(from_where, end_where)
         line_bot_api.reply_message(
             event.reply_token, 
