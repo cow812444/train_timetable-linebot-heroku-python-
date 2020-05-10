@@ -4,8 +4,28 @@ from datetime import (
 )
 import re
 import copy
+import requests
+from auth import Auth
+from dict_menu import DictMenu
 
 class TrainTimeTable:
+    
+    def call_train_station_api(self, from_where, end_where):
+        auth = Auth()
+        flexMsgModule = DictMenu.flexMsgModule
+        if from_where != '' and end_where != '':
+            flexMsgModule_2 = copy.deepcopy(flexMsgModule)
+            flexMsgModule_2['body']['contents'][1]['text'] = from_where + ' → ' + end_where
+            url = 'https://ptx.transportdata.tw/MOTC/v3/Rail/TRA/DailyTrainTimetable/OD/{fr}/to/{ed}/{dates}?$count=true&$format=JSON'.format(fr=location[from_where], ed=location[end_where], dates=today_str)
+            headers = {'algorithm': 'hmac-sha1', \
+                        'headers': 'X-date', \
+                        'content-type': 'application/json'
+                        }
+            headers.update(auth.get_auth_header())
+            r = requests.get(url, timeout=float(10), headers=headers)
+            r_obj = r.json()
+            return r_obj
+
     def get_train_time_table(self, flexMsg, r_obj):
         trainTimeDict = DictMenu.timeTrainModule
         trainTimeTable = {}

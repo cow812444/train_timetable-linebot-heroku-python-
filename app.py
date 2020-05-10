@@ -36,6 +36,10 @@ flexMsgModule_2 = DictMenu.flexMsgModule_2
 location = DictMenu.location
 rich_button_4 = DictMenu.rich_menu_tech_support
 
+#初始化參數
+from_where = ''
+end_where = ''
+
 #selenimu crawler set-up
 #chrome_options = webdriver.ChromeOptions()
 #chrome_options.binary_location = os.environ.get('GOOGLE_CHROME_BIN')
@@ -65,33 +69,116 @@ def callback():
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
     if event.source.user_id != "Udeadbeefdeadbeefdeadbeefdeadbeef":
-        from_where = ''
-        end_where = ''
         ipt_pattern = re.search(r'(基隆|三坑|八堵|七堵|百福|五堵|汐止|汐科|南港|松山|臺北|台北|台南|台中|萬華|板橋|浮洲|樹林|南樹林|山佳|鶯歌|桃園|內壢|中壢|埔心|楊梅|富岡|新富|北湖|湖口|新豐|竹北|北新竹|新竹|三姓橋|香山|崎頂|竹南|造橋|豐富|苗栗|南勢|銅鑼|三義|泰安|后里|豐原|栗林|潭子|頭家厝|松竹|太原|精武|臺中|五權|大慶|烏日|新烏日|成功|彰化|花壇|大村|員林|永靖|社頭|田中|二水|林內|石榴|斗六|斗南|石龜|大林|民雄|嘉北|嘉義|水上|南靖|後壁|新營|柳營|林鳳營|隆田|拔林|善化|南科|新市|永康|大橋|臺南|林森|南臺南|保安|仁德|中洲|大湖|路竹|岡山|橋頭|楠梓|新左營|左營|內惟|美術館|鼓山|三塊厝|高雄|民族|科工館|正義|鳳山|後庄|九曲堂|六塊厝|屏東).*[到去回](基隆|三坑|八堵|七堵|百福|五堵|汐止|汐科|南港|松山|臺北|台北|台南|台中|萬華|板橋|浮洲|樹林|南樹林|山佳|鶯歌|桃園|內壢|中壢|埔心|楊梅|富岡|新富|北湖|湖口|新豐|竹北|北新竹|新竹|三姓橋|香山|崎頂|竹南|造橋|豐富|苗栗|南勢|銅鑼|三義|泰安|后里|豐原|栗林|潭子|頭家厝|松竹|太原|精武|臺中|五權|大慶|烏日|新烏日|成功|彰化|花壇|大村|員林|永靖|社頭|田中|二水|林內|石榴|斗六|斗南|石龜|大林|民雄|嘉北|嘉義|水上|南靖|後壁|新營|柳營|林鳳營|隆田|拔林|善化|南科|新市|永康|大橋|臺南|林森|南臺南|保安|仁德|中洲|大湖|路竹|岡山|橋頭|楠梓|新左營|左營|內惟|美術館|鼓山|三塊厝|高雄|民族|科工館|正義|鳳山|後庄|九曲堂|六塊厝|屏東)', event.message.text)
         rich_pattern = re.search(r'(技術|服務|支持)', event.message.text)
-        if ipt_pattern:
+        go_out_intent_pattern = re.search(r'(出去玩|[搭座坐火]車|台鐵)', event.message.text)
+        a = QuickReply()
+        if go_out_intent_pattern:
+            line_bot_api.reply_message(
+                event.reply_token,
+                TextSendMessage(
+                    text='好的，請問您要從哪裡出發呢？',
+                    quick_reply=QuickReply(
+                        items=[
+                            QuickReplyButton(
+                                action=PostbackAction(label="台北", data="fromPlace=台北")
+                            ),
+                            QuickReplyButton(
+                                action=PostbackAction(label="桃園", data="fromPlace=桃園")
+                            ),
+                            QuickReplyButton(
+                                action=PostbackAction(label="高雄", data="fromPlace=高雄")
+                            ),
+                            QuickReplyButton(
+                                action=PostbackAction(label="台中", data="fromPlace=台中")
+                            ),
+                            QuickReplyButton(
+                                action=MessageAction(label="都可以", text="請不要這樣>< 您決定好後再跟我說唷")
+                            
+                            ),
+                            '''
+                            QuickReplyButton(
+                                action=DatetimePickerAction(label="label3",
+                                                            data="data3",
+                                                            mode="date")
+                            ),
+                            QuickReplyButton(
+                                action=CameraAction(label="label4")
+                            ),
+                            QuickReplyButton(
+                                action=CameraRollAction(label="label5")
+                            ),
+                            QuickReplyButton(
+                                action=LocationAction(label="label6")
+                            ),
+                            '''
+                        ])))
+        elif rich_pattern:
+            line_bot_api.reply_message(
+                event.reply_token, 
+                FlexSendMessage(alt_text='技術支持', contents=rich_button_4)
+                )
+        elif ipt_pattern:
             from_where = ipt_pattern.group(1)
             end_where = ipt_pattern.group(2)
-        if from_where != '' and end_where != '':
-            flexMsgModule_2 = copy.deepcopy(flexMsgModule)
-            flexMsgModule_2['body']['contents'][1]['text'] = from_where + ' → ' + end_where
-            url = 'https://ptx.transportdata.tw/MOTC/v3/Rail/TRA/DailyTrainTimetable/OD/{fr}/to/{ed}/{dates}?$count=true&$format=JSON'.format(fr=location[from_where], ed=location[end_where], dates=today_str)
-            headers = {'algorithm': 'hmac-sha1', \
-                        'headers': 'X-date', \
-                        'content-type': 'application/json'
-                        }
-            headers.update(auth.get_auth_header())
-            r = requests.get(url, timeout=float(10), headers=headers)
-            r_obj = r.json()
-            result_msg = trainCrawler.get_train_time_table(flexMsgModule_2, r_obj)
-            flexMsgs = FlexSendMessage(alt_text='您的火車時刻表', contents=result_msg)
-            line_bot_api.reply_message(event.reply_token, flexMsgs)
-        elif rich_pattern:
-            flexMsgs = FlexSendMessage(alt_text='技術支持', contents=rich_button_4)
-            line_bot_api.reply_message(event.reply_token, flexMsgs)
+            r_obj = trainCrawler.call_train_station_api(from_where, end_where)
+            line_bot_api.reply_message(
+                event.reply_token, 
+                FlexSendMessage(
+                    alt_text='您的火車時刻表', 
+                    contents=trainCrawler.get_train_time_table(flexMsgModule_2, r_obj)
+                    )
+                )
         else:
             msg = TextSendMessage(text='輸入格式錯誤！')
             line_bot_api.reply_message(event.reply_token, msg)
+
+# 處理postback資訊
+@handler.add(PostbackEvent)
+def handle_postback(event):
+    locate = ['台北', '桃園', '台中', '高雄']
+    data = event.postback.data
+    if data.fromPlace in locate:
+        from_where = data.fromPlace
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+                text='好的，請問您要從哪裡出發呢？',
+                quick_reply=QuickReply(
+                    items=[
+                        QuickReplyButton(
+                            action=PostbackAction(label="台北", data="endPlace=台北")
+                        ),
+                        QuickReplyButton(
+                            action=PostbackAction(label="桃園", data="endPlace=桃園")
+                        ),
+                        QuickReplyButton(
+                            action=PostbackAction(label="高雄", data="endPlace=高雄")
+                        ),
+                        QuickReplyButton(
+                            action=PostbackAction(label="台中", data="endPlace=台中")
+                        ),
+                        QuickReplyButton(
+                            action=MessageAction(label="都可以", text="請不要這樣>< 您決定好後再跟我說唷")
+                        
+                        ),
+                    ])))
+    elif data.endPlace in locate:
+        end_where = data.endPlace
+        r_obj = trainCrawler.call_train_station_api(from_where, end_where)
+        line_bot_api.reply_message(
+            event.reply_token, 
+            FlexSendMessage(
+                alt_text='您的火車時刻表', 
+                contents=trainCrawler.get_train_time_table(flexMsgModule_2, r_obj)
+                )
+            )
+    elif data == 'datetime_postback':
+        line_bot_api.reply_message(
+            event.reply_token, TextSendMessage(text=event.postback.params['datetime']))
+    elif data == 'date_postback':
+        line_bot_api.reply_message(
+            event.reply_token, TextSendMessage(text=event.postback.params['date']))
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
