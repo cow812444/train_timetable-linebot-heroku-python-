@@ -67,6 +67,54 @@ def callback():
         abort(400)
     return 'OK'
 
+# 處理postback資訊
+@handler.add(PostbackEvent)
+def handle_postback(event):
+    locate = ['台北', '桃園', '台中', '高雄']
+    data = dict(parse_qsl(event.postback.data))
+    if data.get('fromPlace') in locate:
+        from_where = data.get('fromPlace')
+        r_obj,flexMsgModule_2 = trainCrawler.call_train_station_api(from_where, '桃園')
+        flexMsg = trainCrawler.get_train_time_table(flexMsgModule_2, r_obj)
+        line_bot_api.reply_message(
+            event.reply_token, 
+            FlexSendMessage(
+                alt_text='您的火車時刻表', 
+                contents=flexMsg
+                )
+            )
+        '''
+        line_bot_api.reply_message(
+            event.reply_token,
+            TextSendMessage(
+                text='好的，請問您要去哪裡呢？',
+                quick_reply=QuickReply(
+                    items=[
+                        QuickReplyButton(
+                            action=MessageAction(label="台北", text="請不要這樣>< 您決定好後再跟我說唷")
+                        ),
+                        QuickReplyButton(
+                            action=MessageAction(label="桃園", data="endPlace=桃園")
+                        ),
+                        QuickReplyButton(
+                            action=MessageAction(label="高雄", data="endPlace=高雄")
+                        ),
+                        QuickReplyButton(
+                            action=MessageAction(label="台中", data="endPlace=台中")
+                        ),
+                        QuickReplyButton(
+                            action=MessageAction(label="都可以", text="請不要這樣>< 您決定好後再跟我說唷")
+                        
+                        ),
+                    ])))
+        '''
+    elif data == 'datetime_postback':
+        line_bot_api.reply_message(
+            event.reply_token, TextSendMessage(text=event.postback.params['datetime']))
+    elif data == 'date_postback':
+        line_bot_api.reply_message(
+            event.reply_token, TextSendMessage(text=event.postback.params['date']))
+
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
@@ -119,54 +167,6 @@ def handle_message(event):
         else:
             msg = TextSendMessage(text='輸入格式錯誤！')
             line_bot_api.reply_message(event.reply_token, msg)
-
-# 處理postback資訊
-@handler.add(PostbackEvent)
-def handle_postback(event):
-    locate = ['台北', '桃園', '台中', '高雄']
-    data = dict(parse_qsl(event.postback.data))
-    if data.get('fromPlace') in locate:
-        from_where = data.get('fromPlace')
-        r_obj,flexMsgModule_2 = trainCrawler.call_train_station_api(from_where, '桃園')
-        flexMsg = trainCrawler.get_train_time_table(flexMsgModule_2, r_obj)
-        line_bot_api.reply_message(
-            event.reply_token, 
-            FlexSendMessage(
-                alt_text='您的火車時刻表', 
-                contents=flexMsg
-                )
-            )
-        '''
-        line_bot_api.reply_message(
-            event.reply_token,
-            TextSendMessage(
-                text='好的，請問您要去哪裡呢？',
-                quick_reply=QuickReply(
-                    items=[
-                        QuickReplyButton(
-                            action=MessageAction(label="台北", text="請不要這樣>< 您決定好後再跟我說唷")
-                        ),
-                        QuickReplyButton(
-                            action=MessageAction(label="桃園", data="endPlace=桃園")
-                        ),
-                        QuickReplyButton(
-                            action=MessageAction(label="高雄", data="endPlace=高雄")
-                        ),
-                        QuickReplyButton(
-                            action=MessageAction(label="台中", data="endPlace=台中")
-                        ),
-                        QuickReplyButton(
-                            action=MessageAction(label="都可以", text="請不要這樣>< 您決定好後再跟我說唷")
-                        
-                        ),
-                    ])))
-        '''
-    elif data == 'datetime_postback':
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=event.postback.params['datetime']))
-    elif data == 'date_postback':
-        line_bot_api.reply_message(
-            event.reply_token, TextSendMessage(text=event.postback.params['date']))
 
 if __name__ == "__main__":
     port = int(os.environ.get('PORT', 5000))
