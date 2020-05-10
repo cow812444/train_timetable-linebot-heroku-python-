@@ -266,7 +266,7 @@ class DictMenu(metaclass=Singleton):
                 "text": "VCA虛擬客戶助理",
                 "weight": "bold",
                 "size": "sm",
-                "wrap": true
+                "wrap": True
             },
             {
                 "type": "box",
@@ -319,7 +319,7 @@ class DictMenu(metaclass=Singleton):
                     {
                         "type": "text",
                         "text": "智能客服信用卡助手查帳產品/業務查詢業務辦理中樞平臺 基於自然語言理解、情感計算、深度學習技術，為企業客戶提供從客戶服務、業務辦理、到諮詢等在內的全方位客戶虛擬助理。",
-                        "wrap": true,
+                        "wrap": True,
                         "color": "#8c8c8c",
                         "size": "xs",
                         "flex": 5
@@ -345,7 +345,7 @@ class DictMenu(metaclass=Singleton):
                 "text": "VEA虛擬企業助理",
                 "weight": "bold",
                 "size": "sm",
-                "wrap": true
+                "wrap": True
             },
             {
                 "type": "box",
@@ -398,7 +398,7 @@ class DictMenu(metaclass=Singleton):
                     {
                         "type": "text",
                         "text": "以AI對話機器人為核心，通過自然語言人機對話，為企業內部行政、人事、財務、IT部門提供涵蓋企業政策諮詢、年假及福利管理、員工關系維護等領域的企業虛擬助理。",
-                        "wrap": true,
+                        "wrap": True,
                         "color": "#8c8c8c",
                         "size": "xs",
                         "flex": 5
@@ -476,7 +476,7 @@ class DictMenu(metaclass=Singleton):
                     {
                         "type": "text",
                         "text": "通過軟硬一體的終端設備及系統服務，並融合竹間的計算機視覺理解、情感情緒識別和中文自然語言理解及竹間獨創的“多模態情感識別模型”等技術，打造AI+新零售、AI+教育及AI+出行等領域產品。",
-                        "wrap": true,
+                        "wrap": True,
                         "color": "#8c8c8c",
                         "size": "xs",
                         "flex": 5
