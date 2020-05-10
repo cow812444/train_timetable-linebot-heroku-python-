@@ -160,12 +160,12 @@ def handle_message(event):
                                 action=PostbackAction(label="台中", data="fromPlace=台中", text='台中')
                             ),
                             QuickReplyButton(
-                                action=MessageAction(label="都可以", text="請不要這樣>< 您決定好後再跟我說唷")
+                                action=MessageAction(label="都可以", text="都可以")
                             
                             )
                         ])))
         else:
-            msg = TextSendMessage(text='輸入格式錯誤！')
+            msg = TextSendMessage(text='請不要這樣><')
             line_bot_api.reply_message(event.reply_token, msg)
 
 if __name__ == "__main__":
