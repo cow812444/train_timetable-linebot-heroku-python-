@@ -89,6 +89,7 @@ def handle_message(event):
                     )
                 )
         elif go_out_intent_pattern:
+            end_place = go_out_intent_pattern.group(1)
             line_bot_api.reply_message(
                 event.reply_token,
                 TextSendMessage(
@@ -96,16 +97,16 @@ def handle_message(event):
                     quick_reply=QuickReply(
                         items=[
                             QuickReplyButton(
-                                action=PostbackAction(label="台北", data="fromPlace=台北", text="好的，請問您要去哪裡呢？")
+                                action=PostbackAction(label="台北", data="fromPlace=台北", endPlace=end_place)
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="桃園", data="fromPlace=桃園", text="好的，請問您要去哪裡呢？")
+                                action=PostbackAction(label="桃園", data="fromPlace=桃園", endPlace=end_place)
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="高雄", data="fromPlace=高雄", text="好的，請問您要去哪裡呢？")
+                                action=PostbackAction(label="高雄", data="fromPlace=高雄", endPlace=end_place)
                             ),
                             QuickReplyButton(
-                                action=PostbackAction(label="台中", data="fromPlace=台中", text="好的，請問您要去哪裡呢？")
+                                action=PostbackAction(label="台中", data="fromPlace=台中", endPlace=end_place)
                             ),
                             QuickReplyButton(
                                 action=MessageAction(label="都可以", text="請不要這樣>< 您決定好後再跟我說唷")
@@ -123,7 +124,7 @@ def handle_postback(event):
     data = event.postback.data
     if data.fromPlace in locate:
         from_where = data.fromPlace
-        end_where = '高雄'
+        end_where = event.postback.endPlace
         r_obj = trainCrawler.call_train_station_api(from_where, end_where)
         line_bot_api.reply_message(
             event.reply_token, 

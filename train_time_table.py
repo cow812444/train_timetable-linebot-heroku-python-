@@ -14,6 +14,7 @@ class TrainTimeTable:
         auth = Auth()
         flexMsgModule = DictMenu.flexMsgModule
         location = DictMenu.location
+        today_str = datetime.strftime(datetime.today(), '%Y-%m-%d')
         if from_where != '' and end_where != '':
             flexMsgModule_2 = copy.deepcopy(flexMsgModule)
             flexMsgModule_2['body']['contents'][1]['text'] = from_where + ' → ' + end_where
