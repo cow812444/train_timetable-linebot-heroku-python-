@@ -7,96 +7,101 @@ class Singleton(type):
 
 class DictMenu(metaclass=Singleton):
     flexMsgModule = {
-    "type": "bubble",
-    "body": {
-        "type": "box",
-        "layout": "vertical",
+        "type": "carousel",
         "contents": [
-            {
-            "type": "text",
-            "text": "您的火車時刻表",
-            "weight": "bold",
-            "color": "#1DB446",
-            "size": "sm"
-            },
-            {
-            "type": "text",
-            "text": "桃園 → 竹北",
-            "weight": "bold",
-            "size": "xxl",
-            "margin": "md"
-            },
-            {
-            "type": "text",
-            "text": "歷經 10 站",
-            "size": "sm",
-            "color": "#aaaaaa",
-            "wrap": True
-            },
-            {
-            "type": "separator",
-            "margin": "xs"
-            },
-            {
+        {
+        "type": "bubble",
+        "body": {
             "type": "box",
             "layout": "vertical",
-            "margin": "xxl",
-            "spacing": "sm",
             "contents": [
-                {
-                "type": "box",
-                "layout": "horizontal",
-                "contents": [
-                    {
-                    "type": "text",
-                    "text": "出發時間",
-                    "size": "xs",
-                    "color": "#555555",
-                    "align": "start",
-                    "weight": "bold"
-                    },
-                    {
-                    "type": "text",
-                    "text": "抵達時間",
-                    "size": "xs",
-                    "color": "#555555",
-                    "align": "start",
-                    "weight": "bold"
-                    },
-                    {
-                    "type": "text",
-                    "text": "乘車時間",
-                    "size": "xs",
-                    "align": "start",
-                    "color": "#555555",
-                    "weight": "bold"
-                    },
-                    {
-                    "type": "text",
-                    "text": "車種編號",
-                    "color": "#555555",
-                    "size": "xs",
-                    "align": "center",
-                    "weight": "bold"
-                    }
-                ]
-                },
-                {
+            {
+                "type": "text",
+                "text": "您的火車時刻表",
+                "weight": "bold",
+                "color": "#1DB446",
+                "size": "sm"
+            },
+            {
+                "type": "text",
+                "text": "桃園 → 竹北",
+                "weight": "bold",
+                "size": "xxl",
+                "margin": "md"
+            },
+            {
+                "type": "text",
+                "text": "歷經 10 站",
+                "size": "sm",
+                "color": "#aaaaaa",
+                "wrap": True
+            },
+            {
                 "type": "separator",
                 "margin": "xs"
+            },
+            {
+                "type": "box",
+                "layout": "vertical",
+                "margin": "xxl",
+                "spacing": "sm",
+                "contents": [
+                {
+                    "type": "box",
+                    "layout": "horizontal",
+                    "contents": [
+                    {
+                        "type": "text",
+                        "text": "出發時間",
+                        "size": "xs",
+                        "color": "#555555",
+                        "align": "start",
+                        "weight": "bold"
+                    },
+                    {
+                        "type": "text",
+                        "text": "抵達時間",
+                        "size": "xs",
+                        "color": "#555555",
+                        "align": "start",
+                        "weight": "bold"
+                    },
+                    {
+                        "type": "text",
+                        "text": "乘車時間",
+                        "size": "xs",
+                        "align": "start",
+                        "color": "#555555",
+                        "weight": "bold"
+                    },
+                    {
+                        "type": "text",
+                        "text": "車種編號",
+                        "color": "#555555",
+                        "size": "xs",
+                        "align": "center",
+                        "weight": "bold"
+                    }
+                    ]
+                },
+                {
+                    "type": "separator",
+                    "margin": "xs"
                 }
-            ]
+                ]
             }
-        ]
+            ]
         },
         "styles": {
-        "header": {
+            "header": {
             "separator": False
-        },
-        "footer": {
+            },
+            "footer": {
             "separator": True
+            }
         }
         }
+        ]
     }
     flexMsgModule_2 = {}
     timeTrainModule = {
