@@ -82,7 +82,7 @@ class TrainTimeTable:
             timeTrainModule_2['contents'][1]['text'] = trainTimeTable[trainInfo][5]
             timeTrainModule_2['contents'][2]['text'] = duration
             timeTrainModule_2['contents'][3]['text'] = trainTimeTable[trainInfo][1] + '-' + trainTimeTable[trainInfo][0]
-            flexMsg['body']['contents'][4]['contents'].append(timeTrainModule_2)
+            flexMsg['contents'][0]['body']['contents'][4]['contents'].append(timeTrainModule_2)
             result = '從 {from_}-{from_time} 到 {end}-{end_time} ({type}-{No})\r\n'.format(
                 type=trainTimeTable[trainInfo][1], No=trainTimeTable[trainInfo][0],
                 from_=trainTimeTable[trainInfo][2], end=trainTimeTable[trainInfo][3], 
