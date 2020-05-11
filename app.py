@@ -376,7 +376,7 @@ def get_train_time_table(flexMsg, r_obj):
     #print(datetime.now()- timedelta(days=43893))
     print('---')
     if str(r_obj['Count']) == '0':
-        return '查無航班'
+        return TextSendMessage(text='查無航班')
 
     for payload in r_obj['TrainTimetables']:
         #set default information
