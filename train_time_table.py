@@ -17,7 +17,7 @@ class TrainTimeTable:
         today_str = datetime.strftime(datetime.today(), '%Y-%m-%d')
         if from_where != '' and end_where != '':
             flexMsgModule_2 = copy.deepcopy(flexMsgModule)
-            flexMsgModule_2['body']['contents'][1]['text'] = from_where + ' → ' + end_where
+            flexMsgModule_2['contents'][0]['body']['contents'][1]['text'] = from_where + ' → ' + end_where
             url = 'https://ptx.transportdata.tw/MOTC/v3/Rail/TRA/DailyTrainTimetable/OD/{fr}/to/{ed}/{dates}?$count=true&$format=JSON'.format(fr=location[from_where], ed=location[end_where], dates=today_str)
             headers = {'algorithm': 'hmac-sha1', \
                         'headers': 'X-date', \
