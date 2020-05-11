@@ -75,7 +75,7 @@ class TrainTimeTable:
         #對所有車趟進行時間排序
         timeSequence.sort()
         resultList = []
-        flexMsg['body']['contents'][2]['text'] = '歷經 ' + str(stopSequence_int) + ' 站'
+        flexMsg['contents'][0]['body']['contents'][2]['text'] = '歷經 ' + str(stopSequence_int) + ' 站'
         for trainInfo in timeSequence:
             timeTrainModule_2 = copy.deepcopy(trainTimeDict)
             timeTrainModule_2['contents'][0]['text'] = trainTimeTable[trainInfo][4]
